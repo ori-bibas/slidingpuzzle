@@ -1,5 +1,4 @@
 /*
-  Ori Bibas
   Number Slider Game
   Written in C
 */
