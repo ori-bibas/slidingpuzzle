@@ -192,8 +192,6 @@ int checkIfSolvable(Element** gameBoard, int length){
     }
   }
 
-	printf("------------------(%d)-------------", inversions);
-
   // If the inversion count is even, the puzzle is in an initial solvable state.
   if(inversions % 2 == 1){
     return 0;
