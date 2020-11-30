@@ -1,4 +1,5 @@
 /*
+  Ori Bibas
   Number Slider Game
   Written in C
 */
@@ -164,7 +165,7 @@ Element** createFinalBoard(int length){
 int checkIfSolvable(Element** gameBoard, int length){
   
   // Created an integer array of able to fit all elements in, and filled it up with the array's current elements.
-  int temporary[length*length];
+  int temporary[length*length - 1];
   int index = 0;
   for(int i = 0; i < length; i++){
     for(int j = 0; j < length; j++){
@@ -174,8 +175,7 @@ int checkIfSolvable(Element** gameBoard, int length){
         index++;
       }
       else{
-        temporary[index] = temp.isSpace;
-        index++;
+        continue;
       }
     }
   }
@@ -186,11 +186,13 @@ int checkIfSolvable(Element** gameBoard, int length){
   // Check for how many inversions there are
   for(int i = 0; i < index - 1; i++){
     for(int j = i+1; j < index; j++){
-      if(temporary[i] && temporary[j] && temporary[i] > temporary[j]){
+      if(temporary[i] > temporary[j]){
         inversions++;
       }
     }
   }
+
+	printf("------------------(%d)-------------", inversions);
 
   // If the inversion count is even, the puzzle is in an initial solvable state.
   if(inversions % 2 == 1){
