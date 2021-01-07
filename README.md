@@ -1,11 +1,11 @@
 # Sliding Puzzle Game in C  
-You can choose between easy (3x3) , medium (4x4) , and hard (5x5)  
-Just download the C file, navigate to the directory they are in, and run the code!
+You can choose between three dificulties: easy (3x3) , medium (4x4) , and hard (5x5)
+Just download the .c file, navigate into the directory where the file is located in command line or terminal, and run the code using the commands below!
   
-Windows (cd'ed into directory where file is located)  
-gcc -o SlidingPuzzle SlidingPuzzle.c  
-SlidingPuzzle
+Windows
+> gcc -o SlidingPuzzle SlidingPuzzle.c  
+> SlidingPuzzle
   
 Mac:  
-gcc SlidingPuzzle.c  
-./a.out  
+> gcc SlidingPuzzle.c  
+> ./a.out  
