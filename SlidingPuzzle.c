@@ -103,25 +103,33 @@ int main(){
     {
         int tempChoice;
         printf("\nWhat number would you like to move: ");
-        scanf("%d", &tempChoice);
+        if(scanf("%d", &tempChoice)){
+          // input is an integer.
+          // Check if move is valid, if so, "slide" the piece by swapping it with the space.
+          if(validateMove(gameBoard, length,space, tempChoice)){
+              swap(gameBoard, length, tempChoice, space);
 
-        // Check if move is valid, if so, "slide" the piece by swapping it with the space.
-        if(validateMove(gameBoard, length,space, tempChoice)){
-            swap(gameBoard, length, tempChoice, space);
+              // After every iteration, board needs to be checked for completion.
+              if(checkDone(finalBoard, gameBoard, length)){
+                printf("\n\nGreat job, you won!!\n\n");
+                break;
+              }
+              printf("\n\n\n\n\n\n\n\n\n\n\n");
+              printBoard(gameBoard, length);
+          }
+          else{
+              printf("That is an invalid move, please try again.\n\n");
+              printf("\n\n\n\n\n\n\n\n\n\n\n");
+              printBoard(gameBoard, length);
+              continue;
+          }
         }
         else{
-            printf("That is an invalid move, please try again.\n\n");
-            continue;
+          // not a number.
+          printf("That is not a valid number. Please enter a number.");
+          fflush(stdin);
+          continue;
         }
-        printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-        printBoard(gameBoard, length);
-
-        // After every iteration, board needs to be checked for completion.
-        if(checkDone(finalBoard, gameBoard, length)){
-          printf("\n\nGreat job, you won!!\n\n");
-          break;
-        }
-
     }
 
     // Free all data
@@ -163,7 +171,7 @@ Element** createFinalBoard(int length){
 
 // checkIfSolvable function returns 1 if the gameBoard is in an initial solvable state, or 0 otherwise.
 int checkIfSolvable(Element** gameBoard, int length){
-  
+
   // Created an integer array of able to fit all elements in, and filled it up with the array's current elements.
   int temporary[length*length - 1];
   int index = 0;
@@ -214,7 +222,7 @@ Element** createGameBoard(int length, SpacePosition* space){
     Element** temp = malloc(sizeof(Element*) * length);
     for(int i = 0; i < length; i++){
         temp[i] = malloc(sizeof(Element) * length);
-    } 
+    }
 
     /*
       Array for the elements that will be fed into the 2-D array game board,
@@ -252,7 +260,7 @@ Element** createGameBoard(int length, SpacePosition* space){
 
         }
     }
-    
+
     return temp;
 }
 
