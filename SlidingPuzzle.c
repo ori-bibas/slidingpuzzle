@@ -298,7 +298,7 @@ void printBoard(Element** arr, int length){
     }
 }
 
-// swap function takes in the game board, length, the number to be swapped, and the location of the space.
+// Swap function takes in the game board, length, the number to be swapped, and the location of the space.
 void swap(Element** arr, int length, int num, SpacePosition* space){
 
     int numLocation[2];
