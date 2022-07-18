@@ -1,7 +1,7 @@
 # Sliding Puzzle Game in C  
-You can choose between three dificulties: easy (3x3) , medium (4x4) , and hard (5x5)
-Just download the source file, navigate into the directory in your command line or terminal, and run the code using the commands below!
-  
+Slide numbers until they are in the correct order. 3x3 grid, played in the console.
+
+## How to Download and Run
 ### Windows
 > gcc -o SlidingPuzzle SlidingPuzzle.c  
 > SlidingPuzzle
