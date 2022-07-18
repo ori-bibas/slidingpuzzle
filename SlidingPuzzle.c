@@ -50,33 +50,8 @@ int main(){
 
     printf("\n          ---------- Numbers Puzzle Game ----------\n\n");
     printf("Your goal is to continually move pieces until the game board \nis in the correct order. Once it is, you win and the game will end!\n\n");
-    printf("Please choose your difficulty by typing easy, medium, or hard.\nEasy will be a 3x3 board, medium will be 4x4, and hard is a 5x5.\n\n");
 
-    int flag = 0;
-    int length;
-
-    while(flag != 1){
-
-      char str[20];
-      printf("Enter your difficuly: ");
-      scanf("%s", str);
-
-      if(strcmp(str, "easy") == 0){
-        length = 3;
-        flag = 1;
-      }
-      else if(strcmp(str, "medium") == 0){
-        length = 4;
-        flag = 1;
-      }
-      else if(strcmp(str, "hard") == 0){
-        length = 5;
-        flag = 1;
-      }
-      else{
-        printf("Your entry was not valid, please either type in easy, medium, or hard.\n\n");
-      }
-    }
+    int length = 3;
 
     Element** finalBoard = createFinalBoard(length);
 
@@ -91,11 +66,7 @@ int main(){
       gameBoard = createGameBoard(length, space);
     }
 
-    printf("\n\n\n");
-
-    printf("Your solvable game board is set, good luck!\n\n\n\n\n\n\n\n\n");
-
-    printf("\n\n\n");
+    printf("\n\n\nYour solvable game board is set, good luck!\n\n\n\n\n\n\n\n\n\n\n\n");
 
     printBoard(gameBoard, length);
 
@@ -111,15 +82,13 @@ int main(){
 
               // After every iteration, board needs to be checked for completion.
               if(checkDone(finalBoard, gameBoard, length)){
-                printf("\n\nGreat job, you won!!\n\n");
+                printf("\n\nGreat job, you won!!\n\n\n\n\n\n\n\n\n\n\n\n\n");
                 break;
               }
-              printf("\n\n\n\n\n\n\n\n\n\n\n");
               printBoard(gameBoard, length);
           }
           else{
-              printf("That is an invalid move, please try again.\n\n");
-              printf("\n\n\n\n\n\n\n\n\n\n\n");
+              printf("That is an invalid move, please try again.\n\n\n\n\n\n\n\n\n\n\n\n\n");
               printBoard(gameBoard, length);
               continue;
           }
@@ -141,8 +110,8 @@ int main(){
     for(int i = 0; i < length; i++){
       free(finalBoard[i]);
     }
-    free(finalBoard);
 
+    free(finalBoard);
     free(space);
 
     return 0;
@@ -298,7 +267,7 @@ void printBoard(Element** arr, int length){
     }
 }
 
-// swap function takes in the game board, length, the number to be swapped, and the location of the space.
+// Swap function takes in the game board, length, the number to be swapped, and the location of the space.
 void swap(Element** arr, int length, int num, SpacePosition* space){
 
     int numLocation[2];
@@ -343,78 +312,69 @@ int validateMove(Element** arr, int length, SpacePosition* space, int num){
 
     /*
       Possibilities:
-      Number is in the inner square (check all adjacent sides for space)
-      Number is in one of four corners (check appropriate 2 adjacent sides for space)
-      Number is in outermost square, and not a corner (check appropriate 3 adjacent squares for space)
-      Number has no valid adjacent spaces
+      The number is:
+        - in the middle
+        - in the top right, top left
+        - in the bottom right, bottom left
+        - in the middle top, middle bottom, middle right, middle left
     */
 
-    // ENTIRE INNER SQUARE
-    if((x-1) >= 0 && (x+1) < length && (y-1) >= 0 && (y+1) < length){
-      if(arr[x][y-1].isSpace == 1 || arr[x][y+1].isSpace == 1 || arr[x-1][y].isSpace == 1 || arr[x+1][y].isSpace == 1){
-          return 1;
+    // IF THE NUMBER IS IN THE MIDDLE OF THE 3X3 GRID
+    if(x == 1 && y == 1) {
+      if(arr[0][1].isSpace || arr[1][0].isSpace || arr[1][2].isSpace || arr[2][1].isSpace) {
+        return 1;
       }
     }
-
-    // TOP LEFT CORNER
-    else if(x == 0 && y == 0){
-      if(arr[x][y+1].isSpace == 1 || arr[x+1][y].isSpace == 1){
+    // IF THE NUMBER IS IN THE TOP RIGHT
+    else if(x == 0 && y == 2) {
+      if(arr[0][1].isSpace || arr[1][2].isSpace) {
+        return 1;
+      }
+    }
+    // IF THE NUMBER IS IN THE TOP LEFT
+    else if(x == 0 && y == 0) {
+      if(arr[0][1].isSpace || arr[1][0].isSpace) {
+        return 1;
+      }
+    }
+    // IF THE NUMBER IS IN THE BOTTOM RIGHT
+    else if(x == 2 && y == 2) {
+      if(arr[1][2].isSpace || arr[2][1].isSpace) {
+        return 1;
+      }
+    }
+    // IF THE NUMBER IS IN THE BOTTOM LEFT
+    else if(x == 2 && y == 0) {
+      if(arr[1][0].isSpace || arr[2][1].isSpace) {
+        return 1;
+      }
+    }
+    // IF THE NUMBER IS THE MIDDLE TOP
+    else if(x == 0 && y == 1) {
+      if(arr[0][0].isSpace || arr[1][1].isSpace || arr[0][2].isSpace) {
+        return 1;
+      }
+    }
+    // IF THE NUMBER IS THE MIDDLE BOTTOM
+    else if(x == 2 && y == 1) {
+      if(arr[2][0].isSpace || arr[1][1].isSpace || arr[2][2].isSpace) {
+        return 1;
+      }
+    }
+    // IF THE NUMBER IS MIDDLE RIGHT
+    else if(x == 1 && y == 2) {
+      if(arr[0][2].isSpace || arr[1][1].isSpace || arr[2][2].isSpace) {
+        return 1;
+      }
+    }
+    // IF THE NUMBER IS THE MIDDLE LEFT
+    else if(x == 1 && y == 0) {
+      if(arr[0][0].isSpace || arr[1][1].isSpace || arr[2][0].isSpace) {
         return 1;
       }
     }
 
-    // TOP RIGHT CORNER
-    else if(x == 0 && y == (length - 1)){
-      if(arr[x][y-1].isSpace == 1 || arr[x+1][y].isSpace == 1){
-        return 1;
-      }
-    }
-
-    // BOTTOM LEFT CORNER
-    else if((x == (length - 1)) && y == 0){
-      if(arr[x-1][y].isSpace == 1 || arr[x][y+1].isSpace == 1){
-        return 1;
-      }
-    }
-
-    // BOTTOM RIGHT CORNER
-    else if(y == (length - 1) && x == (length - 1)){
-      if(arr[x-1][y].isSpace == 1 || arr[x][y-1].isSpace == 1){
-        return 1;
-      }
-    }
-
-    // LEFT SIDE
-    else if(y == 0){
-      if(arr[x-1][y].isSpace == 1 || arr[x][y+1].isSpace == 1  || arr[x+1][y].isSpace == 1){
-        return 1;
-      }
-    }
-
-    // TOP SIDE
-    else if(x == 0){
-      if(arr[x][y+1].isSpace == 1 || arr[x+1][y].isSpace == 1 || arr[x][y-1].isSpace == 1){
-        return 1;
-      }
-    }
-
-    // RIGHT SIDE
-    else if(y == (length - 1)){
-      if(arr[x-1][y].isSpace == 1 || arr[x][y-1].isSpace == 1 || arr[x+1][y].isSpace == 1){
-        return 1;
-      }
-    }
-
-    // BOTTOM SIDE
-    else if(x == (length - 1)){
-      if(arr[x][y-1].isSpace == 1 || arr[x-1][y].isSpace == 1 || arr[x][y+1].isSpace == 1){
-        return 1;
-      }
-    }
-
-    else {
-      return 0;
-    }
+    return 0;
 }
 
 // checkDone returns 1 if the board is complete, and 0 if not.
